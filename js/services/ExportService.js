@@ -52,6 +52,9 @@ export class ExportService {
     const uRole = user.targetRole || 'Software Engineer';
     const uCgpa = user.cgpa ? `${user.cgpa} / 10.0` : 'N/A';
     const uGradYear = user.gradYear || '2027';
+    const uEmail = user.email || 'N/A';
+    const uBranch = user.branch || user.department || 'Computer Science & Engineering';
+    const uRollNo = user.rollNumber || user.rollNo || user.studentId || 'N/A';
 
     // 1. DYNAMIC READINESS SCORE & LEVEL (Single Source of Truth via ReadinessEngine)
     const roadmap = Array.isArray(state.roadmap) ? state.roadmap : [];
@@ -198,23 +201,39 @@ export class ExportService {
           </div>
         </div>
 
-        <!-- Student Information Card -->
-        <div class="student-info-grid-print">
+        <!-- Student Information Grid -->
+        <div class="student-info-grid-print" style="grid-template-columns: repeat(4, 1fr); gap: 0.85rem;">
           <div class="info-item">
             <span class="info-label-print">Candidate Name</span>
             <span class="info-val-print">${uName}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label-print">Student Roll No</span>
+            <span class="info-val-print">${uRollNo}</span>
           </div>
           <div class="info-item">
             <span class="info-label-print">College / University</span>
             <span class="info-val-print">${uCollege}</span>
           </div>
           <div class="info-item">
+            <span class="info-label-print">Branch / Dept</span>
+            <span class="info-val-print">${uBranch}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label-print">Email Address</span>
+            <span class="info-val-print">${uEmail}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label-print">CGPA Benchmark</span>
+            <span class="info-val-print">${uCgpa}</span>
+          </div>
+          <div class="info-item">
             <span class="info-label-print">Target Role</span>
             <span class="info-val-print">${uRole}</span>
           </div>
           <div class="info-item">
-            <span class="info-label-print">CGPA & Grad Year</span>
-            <span class="info-val-print">${uCgpa} • Batch ${uGradYear}</span>
+            <span class="info-label-print">Target Timeline</span>
+            <span class="info-val-print">Batch ${uGradYear}</span>
           </div>
         </div>
 
