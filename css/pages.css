@@ -1,0 +1,655 @@
+/* ==========================================================================
+   Pages Stylesheet - Specific Page Layouts & Component Polish
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Page 1: Dashboard View
+   -------------------------------------------------------------------------- */
+.dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.charts-section {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+.chart-card-lg { grid-column: span 8; }
+.chart-card-sm { grid-column: span 4; }
+
+@media (max-width: 1100px) {
+  .chart-card-lg, .chart-card-sm { grid-column: span 12; }
+}
+
+.panels-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .panels-section { grid-template-columns: 1fr; }
+}
+
+.recommendation-list, .deadline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.recommendation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  transition: var(--transition-fast);
+}
+
+.recommendation-item:hover {
+  background: var(--bg-card);
+  border-color: var(--primary-500);
+  transform: translateX(4px);
+}
+
+.rec-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.rec-cat {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.deadline-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary-500);
+  background: var(--bg-subtle);
+}
+
+.deadline-item.today { border-left-color: var(--danger); }
+.deadline-item.tomorrow { border-left-color: var(--warning); }
+.deadline-item.upcoming { border-left-color: var(--success); }
+
+/* --------------------------------------------------------------------------
+   Page 2: Profile View
+   -------------------------------------------------------------------------- */
+.profile-header-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.15));
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.profile-avatar-lg {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary-500), var(--accent-purple-600));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+  border: 4px solid var(--bg-card);
+}
+
+.profile-meta h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.profile-meta p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.profile-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.tag-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--primary-600);
+}
+
+/* --------------------------------------------------------------------------
+   Page 3: Career Goals View
+   -------------------------------------------------------------------------- */
+.career-section-title {
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+}
+
+.career-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.career-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  position: relative;
+}
+
+.career-card:hover {
+  border-color: var(--primary-300);
+  transform: translateY(-2px);
+}
+
+.career-card.selected {
+  border-color: var(--primary-500);
+  background: rgba(59, 130, 246, 0.05);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
+}
+
+.career-card-check {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.career-card.selected .career-card-check {
+  background: var(--primary-500);
+  border-color: var(--primary-500);
+  color: #ffffff;
+}
+
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.company-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.company-card:hover {
+  border-color: var(--accent-purple-500);
+}
+
+.company-card.selected {
+  border-color: var(--accent-purple-500);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.company-logo-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.75rem auto;
+  font-weight: 700;
+  color: var(--primary-600);
+}
+
+/* --------------------------------------------------------------------------
+   Page 4: Roadmap View
+   -------------------------------------------------------------------------- */
+.roadmap-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.roadmap-category-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition-normal);
+}
+
+.category-header {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: var(--bg-card);
+}
+
+.category-header:hover {
+  background: var(--bg-subtle);
+}
+
+.category-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.category-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.category-body {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  display: none;
+}
+
+.roadmap-category-card.open .category-body {
+  display: block;
+}
+
+.milestones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.milestone-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.milestone-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.milestone-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-500);
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Page 5: Task Manager (Kanban Board)
+   -------------------------------------------------------------------------- */
+.kanban-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .kanban-board { grid-template-columns: 1fr; }
+}
+
+.kanban-column {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.column-title {
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.column-count {
+  background: var(--bg-card);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.task-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-fast);
+  cursor: grab;
+}
+
+.task-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-400);
+}
+
+.priority-pill {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.priority-pill.high { background: var(--priority-high-bg); color: var(--priority-high-text); }
+.priority-pill.medium { background: var(--priority-med-bg); color: var(--priority-med-text); }
+.priority-pill.low { background: var(--priority-low-bg); color: var(--priority-low-text); }
+
+/* --------------------------------------------------------------------------
+   Page 6: Skill Tracker View
+   -------------------------------------------------------------------------- */
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.skill-circle-wrap {
+  width: 70px;
+  height: 70px;
+  position: relative;
+}
+
+.skill-level-badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--bg-subtle);
+  color: var(--primary-600);
+}
+
+/* --------------------------------------------------------------------------
+   Page 7: Placement Readiness View
+   -------------------------------------------------------------------------- */
+.readiness-hero-card {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(59, 130, 246, 0.12));
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.gauge-circle {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-center-text {
+  position: absolute;
+  text-align: center;
+}
+
+.gauge-score {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.weighted-scores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.weighted-bar-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+}
+
+/* Progress bar fill */
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--primary-500), var(--accent-purple-500));
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Page 8: Analytics View
+   -------------------------------------------------------------------------- */
+.heatmap-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 1rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.heatmap-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--bg-subtle);
+}
+
+.heatmap-cell[data-count="1"] { background: #93c5fd; }
+.heatmap-cell[data-count="2"] { background: #60a5fa; }
+.heatmap-cell[data-count="3"] { background: #3b82f6; }
+.heatmap-cell[data-count="4"] { background: #1d4ed8; }
+
+/* --------------------------------------------------------------------------
+   Page 9: History View
+   -------------------------------------------------------------------------- */
+.timeline-stream {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline-stream::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: var(--border-color);
+}
+
+.timeline-node {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -2rem;
+  top: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--primary-500);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  box-shadow: 0 0 0 4px var(--bg-app);
+}
+
+/* --------------------------------------------------------------------------
+   Page 10: Achievements View
+   -------------------------------------------------------------------------- */
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.badge-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  transition: var(--transition-fast);
+  position: relative;
+}
+
+.badge-card.unlocked {
+  border-color: var(--primary-400);
+  box-shadow: var(--shadow-glow);
+}
+
+.badge-card.locked {
+  opacity: 0.6;
+  filter: grayscale(0.7);
+}
+
+.badge-icon-lg {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin: 0 auto 1rem auto;
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Page 11 & 12: Export & Settings View
+   -------------------------------------------------------------------------- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-main);
+}
+
+.form-control {
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  transition: var(--transition-fast);
+}
+
+.form-control:focus {
+  border-color: var(--primary-500);
+  background: var(--bg-card);
+}
