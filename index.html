@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlacementOS | Student Career Roadmap & Placement Readiness System</title>
+  <meta name="description" content="A modern, premium productivity dashboard for tracking student placement readiness, career roadmaps, skills, and tasks.">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <div id="app">
+    <!-- Left Collapsible Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Main Sidebar Navigation">
+      <div class="sidebar-header">
+        <a href="#dashboard" class="brand-logo" aria-label="PlacementOS Home">
+          <div class="brand-icon" aria-hidden="true">⚡</div>
+          <span class="brand-text">PlacementOS</span>
+        </a>
+        <button id="sidebar-toggle" class="sidebar-toggle-btn" title="Toggle Sidebar" aria-label="Toggle Sidebar Navigation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" aria-current="page">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <span class="nav-label">Dashboard</span>
+        </a>
+
+        <a href="#profile" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <span class="nav-label">Profile</span>
+        </a>
+
+        <a href="#career-goals" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <span class="nav-label">Career Goals</span>
+        </a>
+
+        <a href="#roadmap" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
+          <span class="nav-label">Roadmap</span>
+        </a>
+
+        <a href="#task-manager" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+          <span class="nav-label">Task Manager</span>
+          <span class="nav-badge">Kanban</span>
+        </a>
+
+        <a href="#skill-tracker" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <span class="nav-label">Skill Tracker</span>
+        </a>
+
+        <a href="#placement-readiness" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg></div>
+          <span class="nav-label">Placement Readiness</span>
+        </a>
+
+        <a href="#analytics" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <span class="nav-label">Analytics</span>
+        </a>
+
+        <a href="#history" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <span class="nav-label">History</span>
+        </a>
+
+        <a href="#achievements" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+          <span class="nav-label">Achievements</span>
+        </a>
+
+        <a href="#export" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+          <span class="nav-label">Export Reports</span>
+        </a>
+
+        <a href="#settings" class="nav-item">
+          <div class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <span class="nav-label">Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-compact">
+          <div id="header-user-avatar" class="avatar" aria-hidden="true">ST</div>
+          <div class="user-info">
+            <div class="user-name">Placement Student</div>
+            <div class="user-role">Preparation Active</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+      <header class="top-header" role="banner">
+        <div class="header-left">
+          <div class="search-box">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="search-input" placeholder="Search tasks, skills, roadmap..." aria-label="Global Search">
+            <span class="shortcut-kbd" aria-hidden="true">Ctrl+K</span>
+          </div>
+          <h1 id="header-title" style="font-size: 1.25rem;">Dashboard Overview</h1>
+        </div>
+
+        <div class="header-right">
+          <div id="current-date" class="date-pill">Today</div>
+
+          <!-- Notification Bell Dropdown -->
+          <div style="position:relative;">
+            <button id="notif-btn" class="icon-btn" title="Notifications" aria-label="Notifications Drawer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="notification-badge" aria-hidden="true"></span>
+            </button>
+            <div id="notif-dropdown" class="notification-dropdown">
+              <div class="dropdown-header">
+                <span style="font-weight:700; font-size:0.9rem;">Notifications</span>
+                <button class="btn btn-sm btn-outline" id="mark-all-read-btn" style="font-size:0.75rem;">Mark all read</button>
+              </div>
+              <div class="dropdown-list" id="notif-list">
+                <div class="notification-item">
+                  <div class="notification-icon" aria-hidden="true">⚡</div>
+                  <div class="notification-content">
+                    <div class="notification-title">Welcome to PlacementOS!</div>
+                    <div class="notification-time">Complete your profile to get started</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dark/Light Theme Switch Toggle -->
+          <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme" aria-label="Toggle Dark and Light Theme">
+            <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+
+          <a href="#profile" class="avatar" style="width:36px; height:36px; font-size:0.8rem;" aria-label="View Profile">ST</a>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <main class="content-area" role="main">
+        <section id="page-dashboard" class="page-view active"></section>
+        <section id="page-profile" class="page-view"></section>
+        <section id="page-career-goals" class="page-view"></section>
+        <section id="page-roadmap" class="page-view"></section>
+        <section id="page-task-manager" class="page-view"></section>
+        <section id="page-skill-tracker" class="page-view"></section>
+        <section id="page-placement-readiness" class="page-view"></section>
+        <section id="page-analytics" class="page-view"></section>
+        <section id="page-history" class="page-view"></section>
+        <section id="page-achievements" class="page-view"></section>
+        <section id="page-export" class="page-view"></section>
+        <section id="page-settings" class="page-view"></section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Dedicated Print Report Root Container -->
+  <div id="print-report-root"></div>
+
+  <!-- Add Task Modal Dialog -->
+  <div id="add-task-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-label="Create New Task Modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Task</h3>
+        <button class="icon-btn" onclick="UIComponents.closeModal('add-task-modal')" aria-label="Close modal">✕</button>
+      </div>
+      <form id="add-task-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="task-title-input">Task Title *</label>
+            <input type="text" id="task-title-input" class="form-control" placeholder="e.g. Practice Graph BFS/DFS Problems" required>
+          </div>
+          <div class="grid-cols-2">
+            <div class="form-group">
+              <label class="form-label" for="task-cat-input">Category *</label>
+              <select id="task-cat-input" class="form-control">
+                <option value="DSA">DSA</option>
+                <option value="Programming">Programming</option>
+                <option value="Projects">Projects</option>
+                <option value="Resume">Resume</option>
+                <option value="Communication">Communication</option>
+                <option value="Interview">Interview</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="task-priority-input">Priority *</label>
+              <select id="task-priority-input" class="form-control">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="task-deadline-input">Deadline</label>
+            <input type="date" id="task-deadline-input" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="UIComponents.closeModal('add-task-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modular ES6 Main Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

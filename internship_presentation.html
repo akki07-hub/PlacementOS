@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlacementOS - Internship Project Evaluation Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card-dark: #1e293b;
+      --bg-light: #f8fafc;
+      --border-light: #e2e8f0;
+      --border-dark: #334155;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #f8fafc;
+      --primary: #2563eb;
+      --primary-subtle: #eff6ff;
+      --accent: #7c3aed;
+      --accent-subtle: #f5f3ff;
+      --success: #16a34a;
+      --warning: #d97706;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .deck-container {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: scale(0.98);
+      padding: 2.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+      z-index: 10;
+    }
+
+    .slide.dark-theme {
+      background: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    .slide-header {
+      margin-bottom: 1.75rem;
+    }
+
+    .slide-tag {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .dark-theme .slide-tag {
+      color: #a78bfa;
+    }
+
+    .slide-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .dark-theme .slide-title {
+      color: var(--text-light);
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+
+    .card {
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+
+    .dark-theme .card {
+      background: var(--bg-card-dark);
+      border-color: var(--border-dark);
+    }
+
+    .card-accent {
+      background: var(--primary-subtle);
+      border-color: #bfdbfe;
+    }
+
+    .card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .dark-theme .card-desc {
+      color: #94a3b8;
+    }
+
+    .deck-footer {
+      height: 60px;
+      background: #020617;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+    }
+
+    .footer-left {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .footer-center {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-nav {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--text-light);
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 4px;
+      background: var(--border-dark);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 8.33%;
+      transition: width 0.3s ease;
+    }
+
+    .flow-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--primary-subtle);
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .flow-step {
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--primary);
+    }
+
+    .flow-arrow {
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .screenshot-img {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- SLIDE 1: Title Slide -->
+    <div class="slide dark-theme active" id="slide-1">
+      <div style="margin: auto 0;">
+        <div style="display: inline-block; background: rgba(124, 58, 237, 0.2); border: 1px solid var(--accent); padding: 0.35rem 1rem; border-radius: 20px; color: #c4b5fd; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.25rem;">
+          🎓 INTERNSHIP EVALUATION PRESENTATION
+        </div>
+        <h1 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.8rem; font-weight: 800; line-height: 1.15; margin-bottom: 1rem;">
+          Student Career Roadmap &<br><span style="background: linear-gradient(90deg, #60a5fa, #c4b5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Placement Readiness Tracking System</span>
+        </h1>
+        <p style="font-size: 1.2rem; color: #94a3b8; margin-bottom: 2.25rem;">
+          Product: <strong>PlacementOS (v2.0)</strong>
+        </p>
+
+        <div class="card" style="background: #1e293b; border-color: #334155; max-width: 820px;">
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; font-size: 0.9rem;">
+            <div><span style="color:#64748b; font-size:0.75rem; text-transform:uppercase; font-weight:700; display:block;">Candidate</span><strong>Alex Mine</strong> • GITAM University (CSE)</div>
+            <div><span style="color:#64748b; font-size:0.75rem; text-transform:uppercase; font-weight:700; display:block;">Domain & Internship</span><strong>Web Development & Client-Side Systems</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Problem Statement -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-tag">02. Problem Statement</div>
+        <div class="slide-title">Fragmented Placement Preparation</div>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="card-title">🧮 Quantitative Aptitude</div><div class="card-desc">Unstructured speed-math practice & mock tests without difficulty tracking.</div></div>
+        <div class="card"><div class="card-title">💻 Data Structures & Algorithms</div><div class="card-desc">Scattered problem tracking across notes with no topic balance (Trees/DP).</div></div>
+        <div class="card"><div class="card-title">⚡ Programming Core</div><div class="card-desc">Lack of syntax & OOPs proficiency tracking across C++, Java, and Python.</div></div>
+        <div class="card"><div class="card-title">🏗️ Projects & Portfolio</div><div class="card-desc">Unorganized full-stack & system projects without clear architectural milestones.</div></div>
+        <div class="card"><div class="card-title">🗣️ Communication & HR</div><div class="card-desc">Infrequent behavioral round practice & lack of STAR technique evaluation frameworks.</div></div>
+        <div class="card"><div class="card-title">📄 Resume & Company Prep</div><div class="card-desc">Scattered company target lists & untracked application lifecycle status.</div></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Proposed Solution -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-tag">03. Proposed Solution</div>
+        <div class="slide-title">PlacementOS: Centralized Preparation Platform</div>
+      </div>
+      <div class="grid-3">
+        <div class="card card-accent"><div class="card-title">🎯 Career Planning</div><div class="card-desc">Set target roles, target companies, and graduation timeline goals.</div></div>
+        <div class="card card-accent"><div class="card-title">🗺️ Roadmaps</div><div class="card-desc">Follow pre-configured, multi-domain preparation tracks.</div></div>
+        <div class="card card-accent"><div class="card-title">📋 Tasks</div><div class="card-desc">Organize daily tasks using interactive Kanban boards & priority tags.</div></div>
+        <div class="card card-accent"><div class="card-title">📈 Skill Tracking</div><div class="card-desc">Track 4-tier skill levels (Beginner → Developing → Proficient → Expert).</div></div>
+        <div class="card card-accent"><div class="card-title">📊 Progress Monitoring</div><div class="card-desc">Real-time productivity analytics, completion velocity, and streak tracking.</div></div>
+        <div class="card card-accent"><div class="card-title">⚡ Placement Readiness</div><div class="card-desc">Algorithmic Placement Readiness Score (0-100) with actionable advice.</div></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Objectives -->
+    <div class="slide" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-tag">04. Objectives</div>
+        <div class="slide-title">Core Goals & Objectives</div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">1. Structured Preparation</div><div class="card-desc">Eliminate random preparation by providing milestone-based domain roadmaps.</div></div>
+        <div class="card"><div class="card-title">2. Progress Tracking</div><div class="card-desc">Provide visual progress indicators, task statuses, and completion velocity metrics.</div></div>
+        <div class="card"><div class="card-title">3. Skill Gap Identification</div><div class="card-desc">Automatically detect weak domain areas for targeted practice.</div></div>
+        <div class="card"><div class="card-title">4. Consistency</div><div class="card-desc">Incentivize daily study habits with active streak counters and longest streak records.</div></div>
+        <div class="card"><div class="card-title">5. Productivity</div><div class="card-desc">Streamline prep workflow into Kanban task states with priority tags & filtering.</div></div>
+        <div class="card"><div class="card-title">6. Placement Readiness Score</div><div class="card-desc">Evaluate student placement readiness objectively on a standardized 0-100 score scale.</div></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Functional Requirements -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <div class="slide-tag">05. Requirements</div>
+        <div class="slide-title">17 Official Functional Requirements</div>
+      </div>
+      <div class="grid-3" style="font-size: 0.85rem;">
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">1. User Profile Management</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">2. Career Goal Management</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">3. Roadmap Creation</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">4. Task Management</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">5. Skill Tracking</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">6. Progress Monitoring</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">7. Placement Readiness</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">8. Dashboard</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">9. Analytics & Insights</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">10. Skill Gap Identification</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">11. Recommendations</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">12. History Management</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">13. Consistency Tracking</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">14. Achievement System</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">15. Search & Filtering</strong></div>
+        <div class="card" style="padding: 0.85rem;"><strong style="color:var(--primary);">16. Data Export</strong></div>
+        <div class="card" style="padding: 0.85rem; grid-column: span 2;"><strong style="color:var(--primary);">17. Data Storage (LocalStorage Persistence)</strong></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Key Features (With UI Screenshot) -->
+    <div class="slide" id="slide-6">
+      <div class="slide-header">
+        <div class="slide-tag">06. Implemented Features</div>
+        <div class="slide-title">Core Application Interface & Roadmap</div>
+      </div>
+      <div class="grid-2" style="align-items:center;">
+        <div>
+          <div class="card" style="margin-bottom:0.85rem;">
+            <div class="card-title">🗺️ Personalized Roadmaps & Task CRUD</div>
+            <div class="card-desc">Multi-domain preparation tracks with Kanban task management (Pending, In Progress, Completed).</div>
+          </div>
+          <div class="card" style="margin-bottom:0.85rem;">
+            <div class="card-title">📈 Skill Tracking & Streaks</div>
+            <div class="card-desc">Interactive 4-tier skill mastery levels & daily activity streak counters.</div>
+          </div>
+          <div class="card">
+            <div class="card-title">💡 Recommendations & Data Export</div>
+            <div class="card-desc">Dynamic advice generator, JSON backup, CSV download, and printable PDF report card.</div>
+          </div>
+        </div>
+        <div>
+          <img src="img_dashboard.jpg" alt="Dashboard Screenshot" class="screenshot-img">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Placement Readiness Engine & Levels -->
+    <div class="slide" id="slide-7">
+      <div class="slide-header">
+        <div class="slide-tag">07. Placement Readiness</div>
+        <div class="slide-title">Placement Readiness Score & Classification Matrices</div>
+      </div>
+
+      <div class="flow-container">
+        <div class="flow-step">Preparation Data</div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">Skill Progress</div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">Readiness Analysis</div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">Readiness Score (0-100)</div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">Readiness Level</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">🎯 SKILL LEVELS (Per Skill)</div>
+          <div class="card-desc" style="line-height:1.6;">
+            <strong>• Beginner:</strong> Basic syntax & fundamental concepts.<br>
+            <strong>• Developing:</strong> Active problem solving & practical tasks.<br>
+            <strong>• Proficient:</strong> Advanced implementation & optimization.<br>
+            <strong>• Expert:</strong> Mastery & architectural application.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚡ READINESS LEVELS (Overall)</div>
+          <div class="card-desc" style="line-height:1.6;">
+            <strong>• Beginner (&lt; 40%):</strong> Building initial preparation foundation.<br>
+            <strong>• Intermediate (40 - 64%):</strong> Steady task execution across core domains.<br>
+            <strong>• Advanced (65 - 84%):</strong> Strong preparation base; interview ready.<br>
+            <strong>• Interview Ready (85 - 100%):</strong> Meeting high placement benchmarks.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Dashboard & Analytics -->
+    <div class="slide" id="slide-8">
+      <div class="slide-header">
+        <div class="slide-tag">08. Dashboard & Analytics</div>
+        <div class="slide-title">Visual Analytics & Insights Interface</div>
+      </div>
+      <div class="grid-2" style="align-items:center;">
+        <div>
+          <div class="card" style="margin-bottom:0.85rem;">
+            <div class="card-title">📊 Overall Progress & Readiness Score</div>
+            <div class="card-desc">Visual completion percentages and hero readiness score gauge.</div>
+          </div>
+          <div class="card" style="margin-bottom:0.85rem;">
+            <div class="card-title">📋 Tasks & Upcoming Milestones</div>
+            <div class="card-desc">Recent task completion list and milestone deadline alerts.</div>
+          </div>
+          <div class="card">
+            <div class="card-title">📈 Category Trends & Consistency</div>
+            <div class="card-desc">HTML5 Canvas ChartEngine (Weekly completion velocity & consistency statistics).</div>
+          </div>
+        </div>
+        <div>
+          <img src="img_analytics.jpg" alt="Analytics Screenshot" class="screenshot-img">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: History, Streaks & Achievements -->
+    <div class="slide" id="slide-9">
+      <div class="slide-header">
+        <div class="slide-tag">09. History & Gamification</div>
+        <div class="slide-title">History Management, Consistency & Achievements</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1.25rem;">
+        <div class="card">
+          <div class="card-title">📜 History Management</div>
+          <div class="card-desc">Filterable audit log of completed tasks, readiness scores, and milestone achievements with timestamps.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔥 Consistency Tracking</div>
+          <div class="card-desc">Tracks daily/weekly preparation habits (<code style="background:#e2e8f0; padding:2px 6px; border-radius:4px;">currentStreak</code>), records all-time <code style="background:#e2e8f0; padding:2px 6px; border-radius:4px;">longestStreak</code>, and active days.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🏆 Achievement System</div>
+          <div class="card-desc">Evaluates preparation milestones and unlocks gamified badges (e.g., DSA Master, Milestone Builder) with toast notifications.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: Technology & Architecture -->
+    <div class="slide" id="slide-10">
+      <div class="slide-header">
+        <div class="slide-tag">10. Technology & Architecture</div>
+        <div class="slide-title">Client-Side Architecture (HTML / CSS / JS / LocalStorage)</div>
+      </div>
+
+      <div class="flow-container" style="background:var(--accent-subtle); border-color:#ddd6fe;">
+        <div class="flow-step" style="color:var(--accent);">User</div>
+        <div class="flow-arrow" style="color:var(--accent);">➔</div>
+        <div class="flow-step" style="color:var(--accent);">UI (HTML/CSS)</div>
+        <div class="flow-arrow" style="color:var(--accent);">➔</div>
+        <div class="flow-step" style="color:var(--accent);">Views / Components</div>
+        <div class="flow-arrow" style="color:var(--accent);">➔</div>
+        <div class="flow-step" style="color:var(--accent);">State Management</div>
+        <div class="flow-arrow" style="color:var(--accent);">➔</div>
+        <div class="flow-step" style="color:var(--accent);">Engines / Services</div>
+        <div class="flow-arrow" style="color:var(--accent);">➔</div>
+        <div class="flow-step" style="color:var(--accent);">LocalStorage</div>
+      </div>
+
+      <div class="grid-3" style="font-size:0.85rem;">
+        <div class="card"><strong style="color:var(--primary);">⚡ Readiness Engine</strong><div class="card-desc">Calculates readiness scores.</div></div>
+        <div class="card"><strong style="color:var(--primary);">💡 Recommendation Engine</strong><div class="card-desc">Dynamic advice generator.</div></div>
+        <div class="card"><strong style="color:var(--primary);">🔥 Streak Engine</strong><div class="card-desc">Daily activity tracking.</div></div>
+        <div class="card"><strong style="color:var(--primary);">🏆 Achievement Engine</strong><div class="card-desc">Badge unlocks & rewards.</div></div>
+        <div class="card"><strong style="color:var(--primary);">🛡️ Validation Module</strong><div class="card-desc">Data verification.</div></div>
+        <div class="card"><strong style="color:var(--primary);">📥 Export Service</strong><div class="card-desc">JSON, CSV & PDF exports.</div></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: Expected Outcome -->
+    <div class="slide" id="slide-11">
+      <div class="slide-header">
+        <div class="slide-tag">11. Expected Outcomes</div>
+        <div class="slide-title">Expected Outcomes & Impact</div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">🎯 Organized Preparation</div><div class="card-desc">Eliminates chaotic study habits through structured, multi-domain roadmaps.</div></div>
+        <div class="card"><div class="card-title">⚡ Better Productivity</div><div class="card-desc">Boosts daily output with Kanban task organization, priority tags, and filtering.</div></div>
+        <div class="card"><div class="card-title">🔍 Identify Skill Gaps</div><div class="card-desc">Instantly highlights weak domain areas prior to campus placement drives.</div></div>
+        <div class="card"><div class="card-title">🔥 Improve Consistency</div><div class="card-desc">Maintains study momentum through daily streak tracking and milestone rewards.</div></div>
+        <div class="card"><div class="card-title">📊 Measure Placement Readiness</div><div class="card-desc">Replaces guesswork with an objective Placement Readiness Score.</div></div>
+        <div class="card"><div class="card-title">💼 Prepare Effectively for Interviews</div><div class="card-desc">Ensures students enter placement drives fully prepared across technical and core domains.</div></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 12: Conclusion & Demo -->
+    <div class="slide dark-theme" id="slide-12">
+      <div style="margin: auto 0;">
+        <div style="display: inline-block; background: rgba(37, 99, 235, 0.2); border: 1px solid var(--primary); padding: 0.35rem 1rem; border-radius: 20px; color: #93c5fd; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.25rem;">
+          12. CONCLUSION & METHODOLOGY
+        </div>
+        <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.25rem; font-weight: 800; margin-bottom: 1.25rem; color: #ffffff;">
+          Plan ➔ Prepare ➔ Track ➔ Analyze ➔ Improve ➔ Become Placement Ready
+        </h2>
+        <p style="font-size: 1.1rem; color: #94a3b8; max-width: 850px; line-height: 1.6; margin-bottom: 2.5rem;">
+          PlacementOS provides a lightweight, client-side, zero-cost career roadmap and placement readiness tracking system built with HTML, CSS, JavaScript, and LocalStorage.
+        </p>
+
+        <div style="background: rgba(124, 58, 237, 0.15); border: 1.5px solid var(--accent); padding: 1.5rem 2rem; border-radius: var(--radius); display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-bottom: 0.25rem;">🚀 Live System Demonstration</div>
+            <div style="color: #c4b5fd; font-size: 0.95rem;">Status: Active Client Application  •  Thank You!</div>
+          </div>
+          <a href="http://localhost:8080" target="_blank" style="background: var(--primary); color: #ffffff; text-decoration: none; padding: 0.65rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem;">Launch System ➔</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="deck-footer">
+    <div class="footer-left">
+      <strong>PlacementOS</strong> • Student Career Roadmap & Placement Readiness System
+    </div>
+    <div class="footer-center">
+      <button class="btn-nav" id="btn-prev">← Previous</button>
+      <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 600;" id="slide-counter">Slide 1 of 12</span>
+      <button class="btn-nav" id="btn-next">Next →</button>
+    </div>
+    <div>
+      <a href="PlacementOS_Internship_Presentation_v2.pptx" download style="color: #60a5fa; font-size: 0.85rem; font-weight: 600; text-decoration: none;">📥 Download PPTX</a>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 12;
+
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const counter = document.getElementById('slide-counter');
+    const progressFill = document.getElementById('progress-fill');
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+
+      document.querySelectorAll('.slide').forEach((s, idx) => {
+        if (idx + 1 === currentSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      counter.textContent = `Slide ${currentSlide} of ${totalSlides}`;
+      progressFill.style.width = `${(currentSlide / totalSlides) * 100}%`;
+    }
+
+    btnPrev.addEventListener('click', () => showSlide(currentSlide - 1));
+    btnNext.addEventListener('click', () => showSlide(currentSlide + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        showSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft') {
+        showSlide(currentSlide - 1);
+      }
+    });
+  </script>
+</body>
+</html>

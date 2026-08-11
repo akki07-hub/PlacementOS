@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlacementOS - Project Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #ffffff;
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #020617;
+      color: var(--text-main);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Presentation Bar */
+    .top-bar {
+      height: 50px;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      color: #94a3b8;
+      font-size: 0.875rem;
+    }
+
+    .brand {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-slide {
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid #334155;
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-slide:hover { background: #2563eb; border-color: #2563eb; }
+
+    /* Slide Deck Container */
+    .slide-deck {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .slide {
+      position: absolute;
+      width: 90%;
+      max-width: 1200px;
+      height: 85%;
+      max-height: 700px;
+      background: var(--bg-card);
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      padding: 3rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95) translateY(20px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1) translateY(0);
+    }
+
+    .slide.dark-slide {
+      background: var(--bg-dark);
+      color: #fff;
+    }
+
+    /* Slide Typography */
+    .slide-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+    }
+
+    .dark-slide .slide-title { color: #fff; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      flex: 1;
+    }
+
+    .card-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dark-slide .card-box {
+      background: #1e293b;
+      border-color: #334155;
+    }
+
+    .card-box h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .card-box p, .card-box ul {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .dark-slide .card-box p, .dark-slide .card-box ul { color: #94a3b8; }
+
+    ul.bullet-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.bullet-list li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.65rem;
+    }
+
+    ul.bullet-list li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.2rem;
+      position: absolute;
+      left: 0;
+      top: -2px;
+    }
+
+    /* Footer counter */
+    .footer-bar {
+      height: 40px;
+      background: #0f172a;
+      border-top: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="brand">🚀 PlacementOS v2.0</div>
+    <div>Student Career Roadmap & Placement Readiness System</div>
+    <div class="controls">
+      <button class="btn-slide" onclick="prevSlide()">← Prev</button>
+      <span id="slide-num">1 / 9</span>
+      <button class="btn-slide" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+
+  <div class="slide-deck">
+
+    <!-- Slide 1: Title -->
+    <div class="slide dark-slide active" id="slide-1" style="justify-content:center; align-items:center; text-align:center;">
+      <div class="slide-tag">Capstone Project Presentation</div>
+      <h1 class="slide-title" style="font-size: 3.5rem; margin-bottom: 1rem;">PlacementOS v2.0</h1>
+      <p style="font-size: 1.35rem; color: #94a3b8; max-width: 700px; margin-bottom: 2rem;">
+        Student Career Roadmap & Placement Readiness System
+      </p>
+      <div style="padding: 0.85rem 1.5rem; background: #1e293b; border-radius: 30px; font-size: 0.9rem; color: #60a5fa; border: 1px solid #334155;">
+        Tech Stack: HTML5 • Vanilla CSS • ES6 Modules • LocalStorage • Handcrafted Canvas Charts
+      </div>
+    </div>
+
+    <!-- Slide 2: Problem & Solution -->
+    <div class="slide" id="slide-2">
+      <div class="slide-tag">Executive Summary</div>
+      <h2 class="slide-title">Problem Statement & Solution</h2>
+      <div class="grid-2">
+        <div class="card-box" style="background: #fef2f2; border-color: #fecaca;">
+          <h3 style="color: #dc2626;">⚠️ Key Preparation Challenges</h3>
+          <ul class="bullet-list" style="color: #374151;">
+            <li><strong>Unstructured Prep:</strong> Students struggle to prioritize between Data Structures, CS Core (OS/DBMS), Web Dev, and HR rounds.</li>
+            <li><strong>No Objective Score:</strong> Lack of a standardized metric to determine if a candidate is truly campus placement ready.</li>
+            <li><strong>Fragmented Progress:</strong> Tasks and target companies recorded across scattered notebooks, sticky notes, and spreadsheets.</li>
+          </ul>
+        </div>
+        <div class="card-box" style="background: #f0fdf4; border-color: #bbf7d0;">
+          <h3 style="color: #16a34a;">🚀 PlacementOS Solution</h3>
+          <ul class="bullet-list" style="color: #374151;">
+            <li><strong>Unified Platform:</strong> 12 integrated functional modules bringing roadmap, tasks, and company goals into one dashboard.</li>
+            <li><strong>Readiness Score Engine:</strong> Algorithmic 0-100 placement readiness calculation based on completed tasks & skills.</li>
+            <li><strong>100% Client-Side Privacy:</strong> Zero server costs, zero tracking, total privacy with local storage persistence.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Architecture & Tech Stack -->
+    <div class="slide" id="slide-3">
+      <div class="slide-tag">Engineering Architecture</div>
+      <h2 class="slide-title">System Architecture & Tech Stack</h2>
+      <div class="grid-3">
+        <div class="card-box">
+          <h3>🎨 Presentation (UI/UX)</h3>
+          <ul class="bullet-list">
+            <li>Semantic HTML5 layout</li>
+            <li>Vanilla CSS Design Tokens</li>
+            <li>Glassmorphism cards & dark mode</li>
+            <li>Responsive across mobile & desktop</li>
+          </ul>
+        </div>
+        <div class="card-box">
+          <h3>⚡ Logic & Controller</h3>
+          <ul class="bullet-list">
+            <li>ES6 Native JavaScript Modules</li>
+            <li>Hash Router (#dashboard, etc.)</li>
+            <li>Reactive State Store (Pub/Sub pattern)</li>
+            <li>Handcrafted Canvas ChartEngine</li>
+          </ul>
+        </div>
+        <div class="card-box">
+          <h3>💾 Storage & Data Mobility</h3>
+          <ul class="bullet-list">
+            <li>Browser LocalStorage state engine</li>
+            <li>JSON backup export & import</li>
+            <li>CSV spreadsheet task report download</li>
+            <li>Printable PDF report generation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Key Modules (1-6) -->
+    <div class="slide" id="slide-4">
+      <div class="slide-tag">Feature Deep-Dive</div>
+      <h2 class="slide-title">Core Functional Modules (1 to 6)</h2>
+      <div class="grid-3">
+        <div class="card-box">
+          <h3>📊 Dashboard Overview</h3>
+          <p>Readiness gauge, velocity line chart, skill radar, and upcoming deadline items.</p>
+        </div>
+        <div class="card-box">
+          <h3>👤 Student Profile</h3>
+          <p>Academic profile management (CGPA, College, Target Role, Dream Company tags).</p>
+        </div>
+        <div class="card-box">
+          <h3>🎯 Career Goals</h3>
+          <p>Tiered company tracker (Dream / Target / Safety) with application state pipeline.</p>
+        </div>
+        <div class="card-box">
+          <h3>🗺️ Career Roadmap</h3>
+          <p>6-domain structured milestone roadmap (DSA, Core CS, Web Dev, Aptitude, HR).</p>
+        </div>
+        <div class="card-box">
+          <h3>📋 Task Kanban Board</h3>
+          <p>Interactive Pending / In Progress / Completed board with priority tags & category filters.</p>
+        </div>
+        <div class="card-box">
+          <h3>📈 Skill Mastery Tracker</h3>
+          <p>4-tier skill tracker (Beginner → Expert) with direct progress level increment controls.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Key Modules (7-12) -->
+    <div class="slide" id="slide-5">
+      <div class="slide-tag">Feature Deep-Dive</div>
+      <h2 class="slide-title">Core Functional Modules (7 to 12)</h2>
+      <div class="grid-3">
+        <div class="card-box">
+          <h3>⚡ Placement Readiness</h3>
+          <p>Algorithmic readiness score breakdown with domain weakness analysis & recommendations.</p>
+        </div>
+        <div class="card-box">
+          <h3>📈 Growth Analytics</h3>
+          <p>Productivity velocity charts, category task distribution, and milestone completion metrics.</p>
+        </div>
+        <div class="card-box">
+          <h3>📜 Audit History Log</h3>
+          <p>Complete filterable record of completed tasks, unlocked badges, and milestones.</p>
+        </div>
+        <div class="card-box">
+          <h3>🏆 Badges & Achievements</h3>
+          <p>Gamified milestone achievement system with toast unlock notifications.</p>
+        </div>
+        <div class="card-box">
+          <h3>📥 Export & PDF Reports</h3>
+          <p>Download JSON backups, export CSV task spreadsheets, and generate printable PDF report cards.</p>
+        </div>
+        <div class="card-box">
+          <h3>⚙️ System Settings</h3>
+          <p>Dark/Light theme switcher, LocalStorage metrics, sample demo data loader, and reset controls.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Readiness Score Engine Algorithm -->
+    <div class="slide" id="slide-6">
+      <div class="slide-tag">Algorithmic Deep-Dive</div>
+      <h2 class="slide-title">Placement Readiness Score Engine</h2>
+      <div class="grid-2">
+        <div class="card-box">
+          <h3>🎯 Weighted Multi-Factor Formula</h3>
+          <ul class="bullet-list">
+            <li><strong>DSA & Problem Solving (30%):</strong> LeetCode, Algorithms, Data Structures</li>
+            <li><strong>Core CS Fundamentals (25%):</strong> OS, DBMS, Computer Networks, OOPs</li>
+            <li><strong>Projects & System Design (20%):</strong> Full-stack applications, System Design</li>
+            <li><strong>Aptitude & Reasoning (15%):</strong> Quantitative & Logical reasoning</li>
+            <li><strong>Behavioral & HR (10%):</strong> Mock Interviews, Resume, Communication</li>
+          </ul>
+        </div>
+        <div class="card-box" style="background: #eff6ff; border-color: #93c5fd;">
+          <h3 style="color: #1d4ed8;">📊 Dynamic Classification</h3>
+          <div style="margin-bottom: 0.85rem;">
+            <strong style="color: #15803d;">🟢 Placement Ready (80 - 100%)</strong>
+            <p style="font-size: 0.85rem;">High confidence for product companies & competitive drives.</p>
+          </div>
+          <div style="margin-bottom: 0.85rem;">
+            <strong style="color: #b45309;">🟡 On Track (60 - 79%)</strong>
+            <p style="font-size: 0.85rem;">Good baseline progress; focus on specific weak domain areas.</p>
+          </div>
+          <div>
+            <strong style="color: #b91c1c;">🔴 Needs Focus (&lt; 60%)</strong>
+            <p style="font-size: 0.85rem;">Follow the structured PlacementOS milestone roadmap.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Differentiators -->
+    <div class="slide" id="slide-7">
+      <div class="slide-tag">Value Proposition</div>
+      <h2 class="slide-title">Key Differentiators & Highlights</h2>
+      <div class="grid-2">
+        <div class="card-box">
+          <h3>⚡ Zero Latency & Offline-First</h3>
+          <p>Instant load times under 50ms with 100% offline functionality using local storage persistence.</p>
+        </div>
+        <div class="card-box">
+          <h3>🔒 Complete Data Privacy</h3>
+          <p>No user data is transmitted to external servers. All progress data stays securely in the student's browser.</p>
+        </div>
+        <div class="card-box">
+          <h3>🛠️ Zero Heavy Dependencies</h3>
+          <p>Built with pure HTML5, CSS3, and ES6 JS. Zero npm package vulnerabilities or framework breaking changes.</p>
+        </div>
+        <div class="card-box">
+          <h3>🔄 Complete Data Mobility</h3>
+          <p>Complete data export/import capabilities allowing students to backup and transfer data across devices.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Future Roadmap -->
+    <div class="slide" id="slide-8">
+      <div class="slide-tag">Product Vision</div>
+      <h2 class="slide-title">Future Scope & Enhancements</h2>
+      <div class="grid-2">
+        <div class="card-box" style="background: #f8fafc;">
+          <h3>🤖 AI Mock Interview Simulator</h3>
+          <p>Integration with Gemini API for real-time speech and text-based technical and HR interview feedback.</p>
+        </div>
+        <div class="card-box" style="background: #f8fafc;">
+          <h3>🔗 Coding Platform Sync</h3>
+          <p>Automated problem count and badge synchronization via LeetCode, HackerRank, and GitHub APIs.</p>
+        </div>
+        <div class="card-box" style="background: #f8fafc;">
+          <h3>📄 AI Resume & ATS Matcher</h3>
+          <p>Real-time ATS score calculation comparing student resume against target job descriptions.</p>
+        </div>
+        <div class="card-box" style="background: #f8fafc;">
+          <h3>👥 Cohort Peer Benchmarks</h3>
+          <p>Anonymous peer cohort comparison to analyze readiness relative to batch averages.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Conclusion -->
+    <div class="slide dark-slide" id="slide-9" style="justify-content:center; align-items:center; text-align:center;">
+      <div class="slide-tag">Thank You</div>
+      <h2 class="slide-title" style="font-size: 3.5rem;">Questions & Discussion</h2>
+      <p style="font-size: 1.25rem; color: #94a3b8; margin-bottom: 2rem;">
+        PlacementOS v2.0 — Empowering Students for Campus Placement Success
+      </p>
+      <div style="font-size: 0.9rem; color: #64748b;">
+        Use ← Arrow and → Arrow keys to navigate slides
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bar">
+    <div>PlacementOS Project Presentation</div>
+    <div>Use Arrow Keys (← / →) or Buttons to Navigate</div>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 9;
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+
+      document.querySelectorAll('.slide').forEach((s, idx) => {
+        s.classList.toggle('active', idx + 1 === currentSlide);
+      });
+
+      document.getElementById('slide-num').textContent = `${currentSlide} / ${totalSlides}`;
+    }
+
+    function nextSlide() { showSlide(currentSlide + 1); }
+    function prevSlide() { showSlide(currentSlide - 1); }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+  </script>
+</body>
+</html>

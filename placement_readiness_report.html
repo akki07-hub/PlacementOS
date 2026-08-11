@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Placement Readiness Report | PlacementOS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #dbeafe;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --bg-subtle: #f8fafc;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --warning: #b45309;
+      --warning-bg: #fef3c7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background-color: #f1f5f9;
+      padding: 2rem 1rem;
+      line-height: 1.5;
+    }
+
+    /* Print Header Controls */
+    .print-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    .btn-back {
+      background: #ffffff;
+      color: var(--text-dark);
+      border: 1px solid var(--border);
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .btn-back:hover {
+      background: #e2e8f0;
+      color: var(--primary);
+    }
+
+    .btn-print {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-print:hover { background: #1e3a8a; }
+
+    .report-paper {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
+    }
+
+    /* Report Header */
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--primary);
+      margin-bottom: 2rem;
+    }
+
+    .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .report-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .doc-meta {
+      text-align: right;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .doc-meta strong { color: var(--text-dark); }
+
+    /* Student Info Bar */
+    .student-info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .info-val {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+    }
+
+    /* Score Hero Box */
+    .readiness-score-card {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      page-break-inside: avoid;
+    }
+
+    .score-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .score-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 4px solid #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .score-max {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .verdict-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .verdict-desc {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      max-width: 480px;
+    }
+
+    .status-badge {
+      background: #22c55e;
+      color: #052e16;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Section Styling */
+    .section-header {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      margin-top: 1.5rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1.5px solid var(--border);
+      page-break-after: avoid;
+    }
+
+    /* Domain Table */
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2.5rem;
+      page-break-inside: avoid;
+    }
+
+    .report-table th, .report-table td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+    }
+
+    .report-table th {
+      background: var(--bg-subtle);
+      font-weight: 700;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .progress-bar-container {
+      width: 140px;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    /* Target Companies Tier Cards */
+    .company-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+      page-break-inside: avoid;
+    }
+
+    .company-tier-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      background: var(--bg-subtle);
+    }
+
+    .tier-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+      color: var(--primary);
+    }
+
+    .company-tag {
+      display: inline-block;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 4px;
+      margin-bottom: 6px;
+    }
+
+    .accomplishments-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      page-break-inside: avoid;
+    }
+
+    /* PRINT MEDIA OVERRIDES */
+    @media print {
+      body { background: #ffffff; padding: 0; }
+      .print-controls { display: none !important; }
+      .report-paper { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+      .readiness-score-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .status-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .progress-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .report-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Action Bar -->
+  <div class="print-controls">
+    <a href="index.html#export" class="btn-back">← Back to PlacementOS</a>
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF Report</button>
+  </div>
+
+  <!-- Printable Paper Document -->
+  <div class="report-paper">
+
+    <!-- Document Header -->
+    <div class="report-header">
+      <div>
+        <div class="brand-title">PlacementOS</div>
+        <div class="report-subtitle">Official Student Placement Readiness Report</div>
+      </div>
+      <div class="doc-meta">
+        <div>Document ID: <strong id="rpt-doc-id">POS-2026-88492</strong></div>
+        <div>Issue Date: <strong id="rpt-date">August 11, 2026</strong></div>
+        <div>Status: <strong>Verified Evaluation</strong></div>
+      </div>
+    </div>
+
+    <!-- Student Metadata -->
+    <div class="student-info-grid">
+      <div class="info-item">
+        <span class="info-label">Candidate Name</span>
+        <span class="info-val" id="rpt-name">Alex Mine</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">College / University</span>
+        <span class="info-val" id="rpt-college">GIT</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Target Role</span>
+        <span class="info-val" id="rpt-role">Software Engineer</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">CGPA & Grad Year</span>
+        <span class="info-val" id="rpt-cgpa">8 / 10.0 • Batch 2027</span>
+      </div>
+    </div>
+
+    <!-- Overall Readiness Hero Score -->
+    <div class="readiness-score-card">
+      <div class="score-left">
+        <div class="score-circle">
+          <span class="score-num" id="rpt-score">84%</span>
+          <span class="score-max">/ 100</span>
+        </div>
+        <div>
+          <div class="verdict-title" id="rpt-verdict-title">Status: Placement Ready 🟢</div>
+          <div class="verdict-desc" id="rpt-verdict-desc">
+            Candidate displays high competency in Data Structures, CS Fundamentals, and Full-Stack Engineering. Recommended for Tier-1 Product Companies.
+          </div>
+        </div>
+      </div>
+      <div class="status-badge" id="rpt-badge">TIER-1 ELIGIBLE</div>
+    </div>
+
+    <!-- Domain Breakdown Table -->
+    <div class="section-header">1. Domain-Wise Readiness Evaluation</div>
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Evaluation Domain</th>
+          <th>Weight</th>
+          <th>Score</th>
+          <th>Mastery Level</th>
+          <th>Domain Status</th>
+        </tr>
+      </thead>
+      <tbody id="rpt-domains-body">
+        <tr>
+          <td><strong>Data Structures & Algorithms</strong></td>
+          <td>30%</td>
+          <td>
+            <div class="progress-bar-container"><div class="progress-fill" style="width: 88%;"></div></div>
+            <strong>88%</strong>
+          </td>
+          <td>Advanced (320+ Solved)</td>
+          <td><span style="color:var(--success); font-weight:700;">● Excellent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Core CS Fundamentals</strong> (OS, DBMS, CN)</td>
+          <td>25%</td>
+          <td>
+            <div class="progress-bar-container"><div class="progress-fill" style="width: 85%;"></div></div>
+            <strong>85%</strong>
+          </td>
+          <td>Advanced (SQL, Indexing, Threads)</td>
+          <td><span style="color:var(--success); font-weight:700;">● Strong</span></td>
+        </tr>
+        <tr>
+          <td><strong>Projects & System Architecture</strong></td>
+          <td>20%</td>
+          <td>
+            <div class="progress-bar-container"><div class="progress-fill" style="width: 80%;"></div></div>
+            <strong>80%</strong>
+          </td>
+          <td>Intermediate (2 Full-Stack Apps)</td>
+          <td><span style="color:var(--success); font-weight:700;">● Good</span></td>
+        </tr>
+        <tr>
+          <td><strong>Quantitative & Logical Aptitude</strong></td>
+          <td>15%</td>
+          <td>
+            <div class="progress-bar-container"><div class="progress-fill" style="width: 78%;"></div></div>
+            <strong>78%</strong>
+          </td>
+          <td>Intermediate (Speed Math, Logic)</td>
+          <td><span style="color:var(--warning); font-weight:700;">● On Track</span></td>
+        </tr>
+        <tr>
+          <td><strong>Behavioral & HR Round Prep</strong></td>
+          <td>10%</td>
+          <td>
+            <div class="progress-bar-container"><div class="progress-fill" style="width: 90%;"></div></div>
+            <strong>90%</strong>
+          </td>
+          <td>Expert (Resume & STAR Method)</td>
+          <td><span style="color:var(--success); font-weight:700;">● Excellent</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Target Companies Tiering -->
+    <div class="section-header">2. Target Company Pipeline & Tiering</div>
+    <div class="company-grid" id="rpt-companies-grid">
+      <div class="company-tier-card">
+        <div class="tier-title">🌟 Dream Tier (Product / Big Tech)</div>
+        <span class="company-tag">Google</span>
+        <span class="company-tag">Microsoft</span>
+        <span class="company-tag">Amazon</span>
+        <span class="company-tag">Atlassian</span>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Status: Applications Submitted</div>
+      </div>
+      <div class="company-tier-card">
+        <div class="tier-title">🎯 Target Tier (Mid-Product / Unicorns)</div>
+        <span class="company-tag">Oracle</span>
+        <span class="company-tag">Adobe</span>
+        <span class="company-tag">Swiggy</span>
+        <span class="company-tag">Razorpay</span>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Status: Tech Interview Stage</div>
+      </div>
+      <div class="company-tier-card">
+        <div class="tier-title">🛡️ Safety Tier (IT Services & Accelerators)</div>
+        <span class="company-tag">TCS Digital</span>
+        <span class="company-tag">Infosys Power</span>
+        <span class="company-tag">Cognizant</span>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Status: Offer Received (9.5 LPA)</div>
+      </div>
+    </div>
+
+    <!-- Verified Achievements & Milestones -->
+    <div class="section-header">3. Verified Accomplishments & Strengths</div>
+    <div class="accomplishments-grid">
+      <div style="background:var(--bg-subtle); border:1px solid var(--border); padding:1.25rem; border-radius:8px;">
+        <strong style="color:var(--primary); font-size:0.95rem;">🏆 Unlocked Placement Badges</strong>
+        <ul style="font-size:0.85rem; color:var(--text-muted); margin-top:0.5rem; padding-left:1.2rem; line-height:1.6;" id="rpt-badges-list">
+          <li><strong>DSA Warrior:</strong> Solved 300+ LeetCode problems across Trees & Dynamic Programming.</li>
+          <li><strong>Database Architect:</strong> Mastered SQL queries, indexing, and ACID transactions.</li>
+          <li><strong>Placement Ready:</strong> Achieved >80% overall readiness score benchmark.</li>
+        </ul>
+      </div>
+      <div style="background:var(--bg-subtle); border:1px solid var(--border); padding:1.25rem; border-radius:8px;">
+        <strong style="color:var(--primary); font-size:0.95rem;">💡 Actionable Recommendations</strong>
+        <ul style="font-size:0.85rem; color:var(--text-muted); margin-top:0.5rem; padding-left:1.2rem; line-height:1.6;">
+          <li>Conduct 2 additional System Design mock interviews (Focus on Load Balancers & Caching).</li>
+          <li>Revise Computer Networks (TCP/IP handshake & HTTP/3 headers) before final technical rounds.</li>
+          <li>Maintain daily DSA revision streak (1 problem/day).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Verification Seal -->
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px dashed var(--border); padding-top:1.5rem;">
+      <div>
+        <div style="font-weight:700; font-size:0.85rem; color:var(--text-dark);">PlacementOS Assessment System</div>
+        <div style="font-size:0.75rem; color:var(--text-muted);">Verified Candidate Transcript & Evaluation Matrix</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:monospace; font-size:0.85rem; font-weight:700; color:var(--primary);">[ VERIFIED ELECTRONIC SIGNATURE ]</div>
+        <div style="font-size:0.75rem; color:var(--text-muted);">Placement Officer Verification Code: #POS-88492</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Dynamic State Hydration from LocalStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      // Date & Doc ID
+      const today = new Date();
+      const options = { month: 'long', day: 'numeric', year: 'numeric' };
+      document.getElementById('rpt-date').textContent = today.toLocaleDateString('en-US', options);
+
+      try {
+        const raw = localStorage.getItem('PLACEMENT_ROADMAP_STATE_V2');
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (data.user) {
+            if (data.user.name) document.getElementById('rpt-name').textContent = data.user.name;
+            if (data.user.college) document.getElementById('rpt-college').textContent = data.user.college;
+            if (data.user.targetRole) document.getElementById('rpt-role').textContent = data.user.targetRole;
+            if (data.user.cgpa && data.user.gradYear) {
+              document.getElementById('rpt-cgpa').textContent = `${data.user.cgpa} / 10.0 • Batch ${data.user.gradYear}`;
+            }
+          }
+
+          // Compute score dynamically if tasks exist
+          if (Array.isArray(data.tasks) && data.tasks.length > 0) {
+            const completed = data.tasks.filter(t => t.status === 'completed').length;
+            const score = Math.min(100, Math.round((completed / data.tasks.length) * 100));
+            document.getElementById('rpt-score').textContent = `${score}%`;
+            if (score >= 80) {
+              document.getElementById('rpt-verdict-title').textContent = 'Status: Placement Ready 🟢';
+              document.getElementById('rpt-badge').textContent = 'TIER-1 ELIGIBLE';
+            } else if (score >= 60) {
+              document.getElementById('rpt-verdict-title').textContent = 'Status: On Track 🟡';
+              document.getElementById('rpt-badge').textContent = 'TIER-2 READY';
+            } else {
+              document.getElementById('rpt-verdict-title').textContent = 'Status: Needs Focus 🔴';
+              document.getElementById('rpt-badge').textContent = 'PREPARATION PHASE';
+            }
+          }
+
+          // Populate unlocked badges
+          if (Array.isArray(data.achievements)) {
+            const unlocked = data.achievements.filter(a => a.unlocked);
+            if (unlocked.length > 0) {
+              const list = document.getElementById('rpt-badges-list');
+              list.innerHTML = unlocked.map(b => `<li><strong>${b.title}:</strong> ${b.description}</li>`).join('');
+            }
+          }
+        }
+      } catch (e) { console.log('Using default report template data'); }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('autoprint') || urlParams.get('autoprint') === 'true') {
+        setTimeout(() => {
+          window.print();
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>
